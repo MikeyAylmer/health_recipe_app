@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, Recipe, Patient
 from sqlalchemy.sql import text
-from forms import AddRecipeForm
+from forms import AddRecipeForm, NewPatientForm
 
 app = Flask(__name__)
 app.app_context().push()
@@ -34,3 +34,26 @@ def details_page():
     """details for recipe"""
     return render_template('details.html')
 
+@app.route('/patients', methods=['GET', "POST"])
+def show_list_of_patients():
+    """Renders patient list"""
+    pats = Patient.query.all()
+    return render_template('patients.html', pats=pats)
+
+@app.route('/patients/new', methods=["GET", "POST"])
+def add_new_patients():
+    """page to add patients"""
+    form = NewPatientForm()
+    if form.validate_on_submit():
+
+        first_name = form.first_name.data
+        last_name = form.last_name.date
+        disease = form.disease.data
+
+        patient = Patient(first_name=first_name, last_name=last_name, disease=disease)
+
+        db.session.add(patient)
+        db.session.commit()
+        return redirect('/patients')
+    else:
+        return render_template('add_patient_form.html', form=form)

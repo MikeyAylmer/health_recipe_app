@@ -16,6 +16,7 @@ class Patient(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
+    disease = db.Column(db.String, nullable=False)
 
     recipe = db.relationship('Recipe')
 
@@ -29,7 +30,7 @@ class Recipe(db.Model):
     __tablename__ = 'recipes'
 
     id = db.Column(db.Integer, primary_key=True)
-    recipe_id = db.Column(db.Integer, db.ForeignKey('patients.id'))
+    patient_id = db.Column(db.Integer, db.ForeignKey('patients.id'))
     recipe_name = db.Column(db.Text, nullable=False, unique=True)
     ingredients = db.Column(db.Text)
 

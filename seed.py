@@ -8,7 +8,7 @@ db.create_all()
 r1 = Recipe(recipe_name='Greek Shrimp & Orzo', 
             ingredients='2lb shrimp, 1/2 cup lemon juice, 3/4lb orzo pasta uncooked, 1/2 cup scallions sliced, 3/4 cup parsley, 3/4 cup fresh dill, 1 cup feta cheese')
 
-p1 = Patient(first_name='Michael', last_name='Aylmer')
+p1 = Patient(first_name='Michael', last_name='Aylmer', disease='GERD')
 
 db.session.add(r1)
 

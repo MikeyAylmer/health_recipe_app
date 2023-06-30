@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directory</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap.min.css"
+        integrity="sha256-/ykJw/wDxMa0AQhHDYfuMEwVb4JHMx9h4jD4XvHqVzU=" crossorigin="anonymous" />
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="display-1">Patients</h1>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <th>Patients</th>
+            </thead>
+            <tbody>
+                {% for pat in pats %}
+                <tr>
+                    <td>{{pat.first_name}}</td>
+                    <td>{{pat.last_name}}</td>
+                    <td>{{pat.disease}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/patients/new" class="btn btn-success">Add Patient</a>
+    </div>
+</body>
+
+</html>
