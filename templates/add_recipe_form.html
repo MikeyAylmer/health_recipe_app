@@ -10,9 +10,9 @@
 
 <body>
     <h1>New Healthy Recipe</h1>
-    <form action="">
-        {% for field in form
-        if field.widget.imput_type != 'hidden' %}
+    <form action="/" method="POST">
+        {{ form.hidden_tag() }}
+        {% for field in form if field.widget.input_type != 'hidden' %}
         <p>
             {{field.label}}
             {{field}}

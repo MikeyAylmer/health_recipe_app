@@ -19,4 +19,18 @@ connect_db(app)
 @app.route('/', methods=["GET", "POST"])
 def add_recipe():
     form = AddRecipeForm()
-    return render_template('add_recipe_form.html', form=form)
+    # for CSRF token validation
+    if form.validate_on_submit():
+        name = form.name.data
+        ingredients = form.ingredients.data
+        difficulty = form.recipe_diff.data
+        flash(f"Created new recipe: {name} {ingredients} Difficulty rating is {difficulty} ")
+        return redirect('/details')
+    else:
+        return render_template('add_recipe_form.html', form=form)
+    
+@app.route('/details')
+def details_page():
+    """details for recipe"""
+    return render_template('details.html')
+
