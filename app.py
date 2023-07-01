@@ -47,13 +47,14 @@ def add_new_patients():
     if form.validate_on_submit():
 
         first_name = form.first_name.data
-        last_name = form.last_name.date
+        last_name = form.last_name.data
         disease = form.disease.data
 
         patient = Patient(first_name=first_name, last_name=last_name, disease=disease)
 
         db.session.add(patient)
         db.session.commit()
+
         return redirect('/patients')
     else:
         return render_template('add_patient_form.html', form=form)

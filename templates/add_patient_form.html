@@ -10,7 +10,7 @@
 
 <body>
     <h1>Add New Patient</h1>
-    <form action="/patients" method="POST">
+    <form action="/patients/new" method="POST">
         {{ form.hidden_tag() }}
         {% for field in form if field.widget.input_type != 'hidden' %}
         <p>
