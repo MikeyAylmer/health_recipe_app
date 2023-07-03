@@ -17,13 +17,14 @@ class Patient(db.Model):
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     disease = db.Column(db.String, nullable=False)
+    age = db.Column(db.Integer, nullable=False)
 
     recipe = db.relationship('Recipe')
 
 
     
     def __repr__(self):
-        return f"<Recipe {self.id} {self.first_name} {self.last_name} >"
+        return f"<Recipe {self.id} {self.first_name} {self.last_name} {self.age} >"
 
 class Recipe(db.Model):
     """Healthy Recipe Model"""

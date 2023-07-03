@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, Recipe, Patient
 from sqlalchemy.sql import text
-from forms import AddRecipeForm, NewPatientForm
+from forms import AddRecipeForm, PatientForm
 
 app = Flask(__name__)
 app.app_context().push()
@@ -43,14 +43,15 @@ def show_list_of_patients():
 @app.route('/patients/new', methods=["GET", "POST"])
 def add_new_patients():
     """page to add patients"""
-    form = NewPatientForm()
+    form = PatientForm()
     if form.validate_on_submit():
 
         first_name = form.first_name.data
         last_name = form.last_name.data
         disease = form.disease.data
+        age = form.age.data
 
-        patient = Patient(first_name=first_name, last_name=last_name, disease=disease)
+        patient = Patient(first_name=first_name, last_name=last_name, disease=disease, age=age)
 
         db.session.add(patient)
         db.session.commit()
@@ -58,3 +59,21 @@ def add_new_patients():
         return redirect('/patients')
     else:
         return render_template('add_patient_form.html', form=form)
+    
+@app.route('/patients/<int:id>/edit', methods=['GET', 'POST'])
+def edit_patient(id):
+    """Form to edit patient"""
+    user = Patient.query.get_or_404(id)
+    form = PatientForm(obj=user)
+    pats = db.session.query(Patient.first_name, Patient.disease, Patient.age)
+    form.first_name.choices = pats
+
+    if form.validate_on_submit():
+        user.first_name = form.first_name.data
+        user.last_name = form.last_name.data
+        user.age = form.age.data
+
+        db.session.commit()
+        return redirect('/patients')
+    else:
+        return render_template('edit_patient_form.html', form=form)

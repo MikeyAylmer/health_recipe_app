@@ -6,20 +6,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Patient</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap.min.css"
+        integrity="sha256-/ykJw/wDxMa0AQhHDYfuMEwVb4JHMx9h4jD4XvHqVzU=" crossorigin="anonymous" />
 </head>
 
 <body>
-    <h1>Add New Patient</h1>
-    <form action="/patients/new" method="POST">
-        {{ form.hidden_tag() }}
-        {% for field in form if field.widget.input_type != 'hidden' %}
-        <p>
-            {{field.label}}
-            {{field}}
-        </p>
-        {% endfor %}
-        <button>Submit</button>
-    </form>
+    <div class="container">
+        <h1>Add New Patient</h1>
+        <form action="/patients/new" method="POST">
+            {{ form.hidden_tag() }}
+            {% for field in form if field.widget.input_type != 'hidden' %}
+            <div class="form-group">
+                {{field.label}}
+                {{field(class_="form-control")}}
+
+                {% for err in field.errors %}
+                <small class="form-text text-danger">
+                    {{err}}
+                </small>
+
+                {% endfor %}
+            </div>
+            {% endfor %}
+            <button class="btn btn-success btn-large">Submit</button>
+        </form>
+    </div>
 </body>
 
 </html>
